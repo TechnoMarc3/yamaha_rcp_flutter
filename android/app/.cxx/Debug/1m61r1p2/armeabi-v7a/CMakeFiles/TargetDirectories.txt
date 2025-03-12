@@ -1,0 +1,2 @@
+/Users/marcoloschner/Documents/yamaha_ql_control/android/app/.cxx/Debug/1m61r1p2/armeabi-v7a/CMakeFiles/edit_cache.dir
+/Users/marcoloschner/Documents/yamaha_ql_control/android/app/.cxx/Debug/1m61r1p2/armeabi-v7a/CMakeFiles/rebuild_cache.dir

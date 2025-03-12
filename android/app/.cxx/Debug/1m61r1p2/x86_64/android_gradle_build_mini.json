@@ -1,0 +1,20 @@
+{
+  "buildFiles": [
+    "/Users/marcoloschner/Documents/Development/flutter/packages/flutter_tools/gradle/src/main/groovy/CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "/Users/marcoloschner/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+      "-C",
+      "/Users/marcoloschner/Documents/yamaha_ql_control/android/app/.cxx/Debug/1m61r1p2/x86_64",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "/Users/marcoloschner/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+    "-C",
+    "/Users/marcoloschner/Documents/yamaha_ql_control/android/app/.cxx/Debug/1m61r1p2/x86_64",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {}
+}

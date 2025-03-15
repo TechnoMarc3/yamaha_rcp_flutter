@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:yamaha_ql_control/io/YamahaConnector.dart';
@@ -28,17 +29,20 @@ class FaderControlsState extends State<FaderControls> {
   @override
   void initState() {
     super.initState();
-    initAndLoadFaders();
-  /*
-    faders = [
-      Fader("Pult 1", 0, -740),
-      Fader("funk 1", 1, -740),
-    ];
+    if(kDebugMode) {
+      faders = [
+        Fader("Pult 1", 0, -740),
+        Fader("funk 1", 1, -740),
+      ];
 
 
-    displayedFaders = faders;
-    widget.ql.savedFaders = faders;
-    */
+      displayedFaders = faders;
+      widget.ql.savedFaders = faders;
+
+    }else{
+      initAndLoadFaders();
+    }
+
 
   }
 
@@ -58,7 +62,7 @@ class FaderControlsState extends State<FaderControls> {
     debugPrint("easy mode is ${widget.easyMode}");
     if (widget.easyMode) {
       displayedFaders = faders
-          .where((e) => e.name == "Pult 2" || e.name == "funk 1")
+          .where((e) => e.name == "Pult 2" || e.name == "Mic 1")
           .toList();
     }
     var n = await widget.ql.getPatchForIndex(12);
@@ -199,12 +203,18 @@ class Fader {
 
   Fader(this.name, this.index, this.intensity) {
     switch (name) {
+      case "Pult 1":
+        description =
+        "Dieses **feste Mikrofon** ist direkt am **Rednerpult** installiert und wird aktiviert, wenn man am Pult spricht. Es ist darauf ausgelegt, **nicht berührt** zu werden, um eine optimale Klangqualität zu gewährleisten. Bitte vermeiden Sie es, das Mikrofon zu verstellen oder zu berühren, um Störgeräusche zu minimieren.";
       case "Pult 2":
         description =
             "Dieses **feste Mikrofon** ist direkt am **Rednerpult** installiert und wird aktiviert, wenn man am Pult spricht. Es ist darauf ausgelegt, **nicht berührt** zu werden, um eine optimale Klangqualität zu gewährleisten. Bitte vermeiden Sie es, das Mikrofon zu verstellen oder zu berühren, um Störgeräusche zu minimieren.";
-      case "funk 1":
+      case "Mic 1":
         description =
             "Dieses **kabellose Mikrofon** kann frei im Raum bewegt werden und eignet sich ideal für **Publikumsfragen**. Es ermöglicht den Teilnehmern, ohne Einschränkungen durch Kabel ihre Fragen zu stellen und sich aktiv an Diskussionen zu beteiligen.";
+      case "funk 1":
+        description =
+        "Dieses **kabellose Mikrofon** kann frei im Raum bewegt werden und eignet sich ideal für **Publikumsfragen**. Es ermöglicht den Teilnehmern, ohne Einschränkungen durch Kabel ihre Fragen zu stellen und sich aktiv an Diskussionen zu beteiligen.";
       default:
         description = "";
     }

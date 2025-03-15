@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 
 import '../widgets/fader.dart';
 
@@ -13,7 +14,7 @@ class YamahaConnector {
  Socket? connectedSocket;
  Stream<dynamic>? dataStream;
  List<Fader> savedFaders = [];
- bool connectionEstablished = false;
+ bool connectionEstablished = kDebugMode;
  //true;
 
  YamahaConnector(this.ip);
@@ -64,13 +65,12 @@ class YamahaConnector {
   }
 
   Future<int> getChannelGain(int index) {
-    /*
-    Completer<int> c = Completer();
+    if(kDebugMode) {
+      Completer<int> c = Completer();
 
-    c.complete( -5);
-    return c.future;
-
-     */
+      c.complete( -5);
+      return c.future;
+    }
     send("get MIXER:Current/InCh/Port/HA/Gain $index 0\n");
     Completer<int> completer = Completer();
     dataStream?.listen((event) {
@@ -105,11 +105,10 @@ class YamahaConnector {
 
   Future<Map<int, int>> getMixersForIndex(int index) {
     Completer<Map<int, int>> completer = Completer();
-    /*
-    completer.complete( Map.fromIterable(List.generate(16, (index) => index), value: (index) => 0));
-    return completer.future;+
-
-     */
+    if(kDebugMode) {
+      completer.complete( Map.fromIterable(List.generate(16, (index) => index), value: (index) => 0));
+      return completer.future;
+    }
     Map<int, int> mixers = {};
     dataStream?.listen((event) {
       if(!event.contains("MIXER:Current/InCh/ToMix/Level")) return;
@@ -132,13 +131,12 @@ class YamahaConnector {
   }
 
   Future<String> getPatchForIndex(int index) {
-    /*
-
-    completer.complete("DANTE 1");
-    return completer.future;
-
-     */
     Completer<String> completer = Completer();
+if(kDebugMode) {
+  completer.complete("DANTE 1");
+  return completer.future;
+}
+
     send("get MIXER:Current/InCh/Patch $index 0\n");
 
     dataStream?.listen((event) {
@@ -159,8 +157,13 @@ class YamahaConnector {
 
 
   Future<double> getFaderIntensity(int index) async{
-    send("get MIXER:Current/InCh/Fader/Level $index 0\n");
     Completer<double> completer = Completer();
+    if(kDebugMode) {
+      completer.complete(-740 );
+      return completer.future;
+    }
+    send("get MIXER:Current/InCh/Fader/Level $index 0\n");
+
    dataStream?.listen((event) {
      var s = event as String;
       if(!event.contains("MIXER:Current/InCh/Fader/Level")) return;

@@ -5,11 +5,12 @@ import 'package:yamaha_ql_control/widgets/fader.dart';
 import 'io/YamahaConnector.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp(true));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  bool easyMode = false;
+  MyApp(this.easyMode, {super.key});
 
   // This widget is the root of your application.
   @override
@@ -25,13 +26,14 @@ class MyApp extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
-      home: const MyHomePage(),
+      home: MyHomePage(easyMode),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key,});
+  bool easyMode = false;
+  MyHomePage(this.easyMode, {super.key,});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -52,7 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ql.connectionEstablished ? (FaderControls(ql: ql)..easyMode = true) : Center(child: CircularProgressIndicator()),
+      body: ql.connectionEstablished ? (FaderControls(ql: ql)..easyMode = widget.easyMode) : Center(child: CircularProgressIndicator()),
     );
   }
 }
